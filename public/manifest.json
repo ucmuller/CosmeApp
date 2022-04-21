@@ -1,0 +1,17 @@
+{
+  "name": "クラメル",
+  "short_name": "クラメル",
+  "start_url": "/?mode=standalone",
+  "display": "standalone",
+  "theme_color": "#19C0C9",
+  "background_color": "#19C0C9",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "images/icon.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}

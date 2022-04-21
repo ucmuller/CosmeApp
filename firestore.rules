@@ -1,0 +1,71 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+        function isAuthenticated() {
+          return request.auth != null;
+        }
+
+        function isUserAuthenticated(usersId) {
+          return isAuthenticated() && usersId == request.auth.uid;
+        }
+
+        function isAdmin() {
+          return request.auth.uid == 'XZarNmGxtBPAsVCJnZqFX6XfUsM2';
+        }
+
+    match /users/{usersId} {
+      allow read, create, update: if isUserAuthenticated(usersId) || isAdmin();
+
+      match /cosmePouch/{cosmePouchId} {
+        allow create, update, delete: if isUserAuthenticated(usersId) || isAdmin();
+        allow read: if true;
+      }
+      
+      match /goodVideo/{goodVideoId} {
+        allow create, update, delete: if isUserAuthenticated(usersId) || isAdmin();
+        allow read: if true;
+      }
+
+    }
+
+    match /channels/{channelsId} {
+      allow read: if true;
+    }
+
+    match /products/{productsId} {
+      allow read: if true;
+      allow create, update: if true;
+    }
+
+    match /brands/{brandsId} {
+      allow read: if true;
+      allow update: if true;
+    }
+
+    match /videos/{videosId} {
+      allow read: if true;
+      allow create, update: if true;
+    }
+
+    match /cosmePouch/{cosmePouchId} {
+      allow read: if true;
+      allow create, update: if isAuthenticated();
+    }
+
+    match /categories/{categoriesId} {
+      allow read: if true;
+    }
+
+    match /videoUnique/{videoUniqueId} {
+      allow read: if true;
+      allow create, update: if true;
+    }
+
+    match /cookies/{cookiesId} {
+      allow read: if true;
+      allow create, update: if true;
+    }
+  }
+}
